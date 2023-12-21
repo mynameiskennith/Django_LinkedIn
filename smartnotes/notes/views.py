@@ -48,3 +48,5 @@ class NotesUpdateView(UpdateView):
 class NotesDeleteView(DeleteView):
     model = Notes
     success_url = '/smart/notes'
+    template_name = 'notes/notes_delete.html'
+
