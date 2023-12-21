@@ -1,11 +1,13 @@
 from django.shortcuts import render
+from django.http.response import HttpResponseRedirect
 from . models import Notes
 from django.http import Http404
 from django.views.generic import DetailView,ListView,CreateView,UpdateView
 from django.views.generic.edit import DeleteView
 from .forms import NotesForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class NotesListView(ListView):
+class NotesListView(LoginRequiredMixin,ListView):
     # use cheyyunna model
     model = Notes
 
@@ -15,6 +17,11 @@ class NotesListView(ListView):
     # use cheyyunna template
     template_name = 'notes/notes_list.html'
 
+    #login url
+    login_url = '/admin'
+
+    def get_queryset(self):
+        return self.request.user.notes.all()
 # def list(request):
 #     all_notes = Notes.objects.all()
 #     return render(request,'notes/notes_list.html',{'notes': all_notes})
@@ -38,6 +45,12 @@ class NotesCreateView(CreateView):
     #fields = ['title','text']
     success_url = '/smart/notes'
     form_class = NotesForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 class NotesUpdateView(UpdateView):
     model = Notes
