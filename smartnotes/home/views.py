@@ -4,6 +4,7 @@ from datetime import datetime
 #above is replaced by
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 
 
 class HomeView(TemplateView):
@@ -21,3 +22,6 @@ class AuthorizedView(LoginRequiredMixin, TemplateView):
 # @login_required(login_url='/admin')
 # def authorized(request):
 #     return render(request,'home/authorized.html',{})
+    
+class LoginInterfaceView(LoginView):
+    template_name = 'home/login.html'
