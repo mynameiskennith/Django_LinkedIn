@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<form action="/logout" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.path }}">
+    <button type="submit">Log out</button>
+</form>
+  
     <h1>HOpe to see you soon</h1>
 {% endblock %}
