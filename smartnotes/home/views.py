@@ -28,7 +28,7 @@ class AuthorizedView(LoginRequiredMixin, TemplateView):
 class LoginInterfaceView(LoginView):
     template_name = 'home/login.html'
 
-class LogoutInterfaceVi(LogoutView):
+class LogoutInterfaceVie(LogoutView):
     pass
     #template_name = 'home/logout.html'
 
